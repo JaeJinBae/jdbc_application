@@ -7,8 +7,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import kr.or.dgit.jdbc_application.dao.DepartmentDao;
+import kr.or.dgit.jdbc_application.dao.EmployeeDao;
 import kr.or.dgit.jdbc_application.dao.TitleDao;
 import kr.or.dgit.jdbc_application.dto.Department;
+import kr.or.dgit.jdbc_application.dto.Employee;
 import kr.or.dgit.jdbc_application.dto.Title;
 import kr.or.dgit.jdbc_application.jdbc.DBCon;
 import kr.or.dgit.jdbc_application.jdbc.JdbcUtil;
@@ -22,9 +24,51 @@ public class TestMain {
 
 //		testTitleDao();
 		
+		Employee emp=new Employee(5555, "이순신", new Title(3), new Employee(4377), 1500000, new Department(5));
+//		employeeInsert(emp);
+//		employeeDelete(emp);
+//		employeeListAll();
+		employeeSelect(emp);
 		
 		
+
+	}
+	private static void employeeSelect(Employee emp) {
+		try {
+			Employee searchEmployee=EmployeeDao.getInstance().selectItemByNo(emp);
+			System.out.println(searchEmployee);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private static void employeeListAll() {
+		try {
+			List<Employee> lists=EmployeeDao.getInstance().selectItemByAll();
+			for(Employee emp:lists){
+				System.out.println(emp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private static void employeeDelete(Employee emp) {
+		try {
+			EmployeeDao.getInstance().deleteItem(emp);
+			JOptionPane.showMessageDialog(null, "사원정보를 삭제하였습니다.");
+		} catch (SQLException e) {
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
+			JOptionPane.showMessageDialog(null, "존재하지 않는 사원입니다.");
+		}
 		
+	}
+	private static void employeeInsert(Employee emp) {
+		try {
+			EmployeeDao.getInstance().insertItem(emp);
+			JOptionPane.showMessageDialog(null, "사원정보가 추가되었습니다.");
+		} catch (SQLException e) {
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
+			JOptionPane.showMessageDialog(null, "이미 존재하는 사원입니다.");
+		}
 	}
 	private static void testTitleDao() {
 		Title tt=new Title(6, "차장");

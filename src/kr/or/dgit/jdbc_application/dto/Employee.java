@@ -8,11 +8,11 @@ public class Employee {
 	private int salary;
 	private Department dno;
 
-	private Employee() {
+	public Employee() {
 		// TODO Auto-generated constructor stub
 	}
 
-	private Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dno) {
+	public Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dno) {
 		this.empNo = empNo;
 		this.empName = empName;
 		this.title = title;
@@ -20,6 +20,7 @@ public class Employee {
 		this.salary = salary;
 		this.dno = dno;
 	}
+
 
 	public int getEmpNo() {
 		return empNo;
@@ -71,8 +72,11 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return String.format("%s, %s, %s, %s, %s, %s", empNo, empName, title.getTitleName(), manager.getEmpName(),
+		return String.format("%s, %s, %s, %s, %s, %s", empNo, empName, title.getTitleNo(), manager.getEmpNo(),
 				salary, dno.getDeptNo());
 	}
 
+	public Employee(int empNo) {
+		this.empNo = empNo;
+	}
 }
