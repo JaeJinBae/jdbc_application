@@ -7,7 +7,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import kr.or.dgit.jdbc_application.dao.DepartmentDao;
+import kr.or.dgit.jdbc_application.dao.TitleDao;
 import kr.or.dgit.jdbc_application.dto.Department;
+import kr.or.dgit.jdbc_application.dto.Title;
 import kr.or.dgit.jdbc_application.jdbc.DBCon;
 import kr.or.dgit.jdbc_application.jdbc.JdbcUtil;
 
@@ -16,6 +18,78 @@ public class TestMain {
 	public static void main(String[] args) {
 		// testDBCon();
 
+//		testDepartmentDao();
+
+//		testTitleDao();
+		
+		
+		
+		
+	}
+	private static void testTitleDao() {
+		Title tt=new Title(6, "차장");
+		
+		titleInsert(tt);
+		titleListAll();
+		
+		tt.setTitleName("부사장");
+		titleUpdqte(tt);
+		titleSearchByNo(tt);
+		
+		titleDelete(tt);
+		titleListAll();
+	}
+private static void titleUpdqte(Title tt) {
+		try {
+			TitleDao.getInstance().updateItem(tt);
+			JOptionPane.showMessageDialog(null, "직급이 수정되었습니다..");
+		} catch (SQLException e) {
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
+			JOptionPane.showMessageDialog(null, "직급이 없습니다.");
+		}
+	}
+
+	private static void titleSearchByNo(Title tt) {
+		try {
+			Title searchTitle=TitleDao.getInstance().selectItemByNo(tt);
+			System.out.println(tt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void titleListAll() {
+		try {
+			List<Title> lists=TitleDao.getInstance().selectItemByAll();
+			for(Title tt:lists){
+				System.out.println(tt);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void titleDelete(Title tt) {
+		try {
+			TitleDao.getInstance().deleteItem(tt);
+			JOptionPane.showMessageDialog(null, "직급이 삭제되었습니다.");
+		} catch (SQLException e) {
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
+			JOptionPane.showMessageDialog(null, "직급이 없습니다.");
+		}
+	}
+
+	private static void titleInsert(Title tt) {
+		try {
+			TitleDao.getInstance().insertItem(new Title(6, "차장"));
+			JOptionPane.showMessageDialog(null, "직급이 추가되었습니다.");
+		} catch (SQLException e) {
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
+			JOptionPane.showMessageDialog(null, "직급이 중복됩니다.");
+		}
+	}
+
+	private static void testDepartmentDao() {
 		Department dept = new Department(4, "마케팅", 10);
 
 		testInsert(dept);
@@ -27,9 +101,6 @@ public class TestMain {
 		
 		testDelete(dept);
 		testListAll();
-		
-		
-
 	}
 
 	private static void testUpdate(Department dept) {
@@ -63,7 +134,7 @@ public class TestMain {
 
 	private static void testDelete(Department dept) {
 		try {
-			DepartmentDao.getInstance().deleteItem(new Department(4, "마케팅", 10));
+			DepartmentDao.getInstance().deleteItem(dept);
 			JOptionPane.showMessageDialog(null, "부서가 삭제되었습니다..");
 		} catch (SQLException e) {
 			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
@@ -73,7 +144,7 @@ public class TestMain {
 
 	private static void testInsert(Department dept) {
 		try {
-			DepartmentDao.getInstance().insertItem(new Department(4, "마케팅", 10));
+			DepartmentDao.getInstance().insertItem(dept);
 			JOptionPane.showMessageDialog(null, "부서가 추가되었습니다.");
 		} catch (SQLException e) {
 			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());

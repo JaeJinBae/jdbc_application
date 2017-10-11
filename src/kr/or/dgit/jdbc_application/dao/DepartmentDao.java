@@ -31,9 +31,8 @@ public class DepartmentDao implements SqlDao<Department> {
 			pstmt.setInt(1, item.getDeptNo());
 			pstmt.setString(2, item.getDeptName());
 			pstmt.setInt(3, item.getFloor());
-
+			pstmt.executeUpdate();
 		}
-
 	}
 
 	@Override
@@ -43,17 +42,12 @@ public class DepartmentDao implements SqlDao<Department> {
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, item.getDeptNo());
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
-			e.printStackTrace();
-
-		}
-
+		} 
 	}
 
 	@Override
 	public void updateItem(Department item) throws SQLException {
-		String sql = "update department set deptname=? floor=? where deptno=?";
+		String sql = "update department set deptname=?, floor=? where deptno=?";
 		Connection con = DBCon.getInstance().getConnection();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, item.getDeptName());

@@ -29,4 +29,14 @@ public class Title {
 		return String.format("Title [titleNo=%s, titleName=%s]", titleNo, titleName);
 	}
 
+	public Title(int titleNo, String titleName) {
+		this.titleNo = titleNo;
+		this.titleName = titleName;
+	}
+
+	public Title(int titleNo) {
+		this.titleNo = titleNo;
+	}
+
+	
 }
