@@ -5,6 +5,12 @@ public class Department {
 	private String deptName;
 	private int floor;
 
+	public Department(int deptNo, String deptName, int floor) {
+		this.deptNo = deptNo;
+		this.deptName = deptName;
+		this.floor = floor;
+	}
+
 	private Department() {
 		// TODO Auto-generated constructor stub
 	}
@@ -35,7 +41,11 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return String.format("Department [deptNo=%s, deptName=%s, floor=%s]", deptNo, deptName, floor);
+		return String.format("deptNo=%s, deptName=%s, floor=%s", deptNo, deptName, floor);
+	}
+
+	public Department(int deptNo) {
+		this.deptNo = deptNo;
 	}
 
 }
